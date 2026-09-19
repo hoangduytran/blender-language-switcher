@@ -1,5 +1,7 @@
 # Blender Language Switcher
 
+**English** | [Tiếng Việt](README_VI.md)
+
 A small Blender add-on that puts a **language switcher in the top bar**, so you can
 flip the whole UI between English and another language with one click, without
 digging through *Preferences → Interface → Translation*.
@@ -157,6 +159,7 @@ one changes, `language_state.apply_language_state()` sets
 | `switch_language/blender_manifest.toml` | Extension manifest |
 | `dist/switch_language-1.0.1.zip` | Ready-to-install extension package |
 | `mk_install_zip.py` | Rebuilds the zip in `dist/` from the source |
+| `README_VI.md` | This guide in Vietnamese |
 
 ## License
 
