@@ -7,7 +7,7 @@ type = "add-on"
 tags = ["User Interface"]
 version = "1.0.1"
 blender_version_min = "4.2.0"
-maintainer = "Blender Translation Local Test"
+maintainer = "Hoang Duy Tran <hoangduytran1960@googlemail.com>"
 license = [
     "SPDX:GPL-2.0-or-later",
 ]

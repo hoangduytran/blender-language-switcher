@@ -19,7 +19,7 @@ from .language_state import (
 
 bl_info = {
     "name": "Switch Language",
-    "author": "Blender Translation Local Test",
+    "author": "Hoang Duy Tran <hoangduytran1960@googlemail.com>",
     "version": (1, 0, 1),
     "blender": (4, 2, 0),
     "location": "Top Bar (next to Scene selector)",
