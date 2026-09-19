@@ -1,0 +1,19 @@
+schema_version = "1.0.0"
+
+id = "switch_language"
+name = "Switch Language"
+tagline = "Quickly toggle UI translation language from the top bar"
+type = "add-on"
+tags = ["User Interface"]
+version = "1.0.1"
+blender_version_min = "4.2.0"
+maintainer = "Blender Translation Local Test"
+license = [
+    "SPDX:GPL-2.0-or-later",
+]
+
+[build]
+paths_exclude_pattern = [
+    "__pycache__/",
+    ".*",
+]
