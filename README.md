@@ -48,13 +48,24 @@ You can also drag and drop the zip file onto the Blender window.
 
 ### Installing from source
 
-To install from source instead, zip the contents of the
-[`switch_language/`](switch_language/) folder yourself and install that zip as
-described above. Or build it with Blender's own tool:
+If you've changed the source, rebuild the zip with the included script. It
+needs Python 3.8 or newer and writes `dist/switch_language-<version>.zip`,
+taking the version from `blender_manifest.toml`:
 
 ```sh
-blender --command extension build --source-dir switch_language --output-dir dist
+python3 mk_install_zip.py                        # auto-detect Blender, else plain zip
+python3 mk_install_zip.py --blender /path/to/blender
+python3 mk_install_zip.py --no-blender           # plain zip, no Blender needed
 ```
+
+When the script can find Blender 4.2+, it builds and validates the package with
+`blender --command extension build`. It looks in `--blender`, the `BLENDER`
+environment variable, `blender` on `PATH`, and on macOS
+`/Applications/Blender*.app`. If Blender isn't found, it writes the same zip
+layout using Python alone. Then install the new zip as described above.
+
+When you release a new version, bump `version` in `blender_manifest.toml` first
+so the zip gets a new file name.
 
 ## Usage
 
@@ -83,6 +94,7 @@ one changes, `language_state.apply_language_state()` sets
 | `switch_language/language_state.py` | Logic for choosing the language and applying the translation options |
 | `switch_language/blender_manifest.toml` | Extension manifest |
 | `dist/switch_language-1.0.1.zip` | Ready-to-install extension package |
+| `mk_install_zip.py` | Rebuilds the zip in `dist/` from the source |
 
 ## License
 
