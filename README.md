@@ -46,33 +46,95 @@ wants to look up the original English name of a menu item or tool.
 
 You can also drag and drop the zip file onto the Blender window.
 
-### Installing from source
-
-If you've changed the source, rebuild the zip with the included script. It
-needs Python 3.8 or newer and writes `dist/switch_language-<version>.zip`,
-taking the version from `blender_manifest.toml`:
-
-```sh
-python3 mk_install_zip.py                        # auto-detect Blender, else plain zip
-python3 mk_install_zip.py --blender /path/to/blender
-python3 mk_install_zip.py --no-blender           # plain zip, no Blender needed
-```
-
-When the script can find Blender 4.2+, it builds and validates the package with
-`blender --command extension build`. It looks in `--blender`, the `BLENDER`
-environment variable, `blender` on `PATH`, and on macOS
-`/Applications/Blender*.app`. If Blender isn't found, it writes the same zip
-layout using Python alone. Then install the new zip as described above.
-
-When you release a new version, bump `version` in `blender_manifest.toml` first
-so the zip gets a new file name.
-
 ## Usage
 
 1. Look at the right-hand end of the top bar, just before the **Scene** selector.
 2. Pick a language from the dropdown.
 3. Tick the checkbox to switch the UI to that language.
 4. Untick it to go back to English.
+
+## Changing the add-on and building your own zip
+
+The `mk_install_zip.py` script turns the files in `switch_language/` into an
+installable zip. Use it after you change the code, for example to fix a bug or
+to change the default language, and want to install your own version.
+
+You need **Python 3.8 or newer** and a copy of this repository.
+
+### 1. Get the source
+
+With Git:
+
+```sh
+git clone https://github.com/hoangduytran/blender-language-switcher.git
+cd blender-language-switcher
+```
+
+Without Git, click **Code → Download ZIP** on the GitHub page, unzip it, and
+open a terminal in the unzipped folder.
+
+### 2. Make your changes
+
+Edit the files in `switch_language/`:
+
+- `__init__.py` draws the switcher in the top bar and stores its settings.
+- `language_state.py` decides which language to use and turns the translation
+  options on or off.
+- `blender_manifest.toml` holds the name, version and minimum Blender version.
+
+If you plan to share your build, increase `version` in `blender_manifest.toml`
+(for example `1.0.1` → `1.0.2`). The zip is named after this version, and a
+higher number lets Blender treat it as an update.
+
+### 3. Build the zip
+
+Run the script from the repository folder.
+
+macOS / Linux:
+
+```sh
+python3 mk_install_zip.py
+```
+
+Windows (Command Prompt or PowerShell):
+
+```bat
+py mk_install_zip.py
+```
+
+The zip is written to `dist/switch_language-<version>.zip`, and the last line
+of output shows its exact name:
+
+```
+Created dist/switch_language-1.0.2.zip (3 files: blender_manifest.toml, __init__.py, language_state.py)
+```
+
+By default the script looks for Blender. If it finds one, it builds the
+package with Blender's own extension builder and checks that the package is
+valid. It looks in these places, in order:
+
+1. the `--blender` option,
+2. the `BLENDER` environment variable,
+3. `blender` on your `PATH`,
+4. on macOS, `/Applications/Blender*.app`.
+
+If Blender isn't found, the script creates the zip with Python alone. That zip
+has the same contents, but Blender hasn't checked it.
+
+Options:
+
+| Command | What it does |
+|---------|--------------|
+| `python3 mk_install_zip.py` | Uses Blender if it can find it, otherwise plain Python |
+| `python3 mk_install_zip.py --blender PATH` | Uses the Blender at `PATH`, e.g. `"C:\Program Files\Blender Foundation\Blender 4.5\blender.exe"` or `/Applications/Blender.app/Contents/MacOS/Blender` |
+| `python3 mk_install_zip.py --no-blender` | Never uses Blender; plain Python only |
+| `python3 mk_install_zip.py --help` | Shows these options |
+
+### 4. Install your zip
+
+Install the new file from `dist/` as described in [Installation](#installation).
+If an older version is already installed, Blender replaces it. Restart Blender
+if the top bar doesn't update.
 
 ## How it works
 
