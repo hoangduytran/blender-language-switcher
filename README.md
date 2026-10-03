@@ -21,8 +21,8 @@ wants to look up the original English name of a menu item or tool.
 
 | Blender version | Package |
 |---|---|
-| 2.78–4.1 | [switch_language-1.0.3-support_legacy.zip](https://github.com/hoangduytran/blender-language-switcher/releases/download/v1.0.3/switch_language-1.0.3-support_legacy.zip) |
-| 4.2+ | [switch_language-1.0.3.zip](https://github.com/hoangduytran/blender-language-switcher/releases/download/v1.0.3/switch_language-1.0.3.zip) |
+| 2.78–4.1 | [switch_language-1.0.3-support_legacy.zip](https://github.com/hoangduytran/blender-language-switcher/raw/refs/tags/v1.0.3/dist/switch_language-1.0.3-support_legacy.zip) |
+| 4.2+ | [switch_language-1.0.3.zip](https://github.com/hoangduytran/blender-language-switcher/raw/refs/tags/v1.0.3/dist/switch_language-1.0.3.zip) |
 
 The legacy package also supports newer Blender versions through the add-on
 installer. Both packages contain the same language-switching code. Install one.

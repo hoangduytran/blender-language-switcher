@@ -27,8 +27,8 @@ Tiện ích này có ích cho:
 
 | Phiên bản Blender | Tệp cài đặt |
 |---|---|
-| 2.78–4.1 | [switch_language-1.0.3-support_legacy.zip](https://github.com/hoangduytran/blender-language-switcher/releases/download/v1.0.3/switch_language-1.0.3-support_legacy.zip) |
-| 4.2 trở lên | [switch_language-1.0.3.zip](https://github.com/hoangduytran/blender-language-switcher/releases/download/v1.0.3/switch_language-1.0.3.zip) |
+| 2.78–4.1 | [switch_language-1.0.3-support_legacy.zip](https://github.com/hoangduytran/blender-language-switcher/raw/refs/tags/v1.0.3/dist/switch_language-1.0.3-support_legacy.zip) |
+| 4.2 trở lên | [switch_language-1.0.3.zip](https://github.com/hoangduytran/blender-language-switcher/raw/refs/tags/v1.0.3/dist/switch_language-1.0.3.zip) |
 
 Tệp legacy cũng hỗ trợ Blender mới hơn qua trình cài add-on. Hai tệp dùng
 cùng mã đổi ngôn ngữ; chỉ cài một loại. Blender trước 2.78 không được hỗ trợ.
