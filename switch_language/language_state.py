@@ -4,8 +4,6 @@
 
 """State helpers for the Switch Language add-on."""
 
-from __future__ import annotations
-
 
 DEFAULT_LANGUAGE_IDENTIFIER = "DEFAULT"
 ENGLISH_LANGUAGE_IDENTIFIER = "en_US"
@@ -50,20 +48,22 @@ def resolve_target_language(enabled, selected_language, available_languages):
 
 
 def set_translation_options(view, enabled):
-    """Set all translation usage flags on a Blender preferences view object."""
+    """Set translation flags supported by this Blender version."""
+    properties = view.bl_rna.properties
     for option_name in TRANSLATION_OPTION_NAMES:
-        setattr(view, option_name, enabled)
+        if option_name in properties:
+            setattr(view, option_name, enabled)
 
 
 def apply_language_state(view, enabled, selected_language, available_languages):
     """Apply the quick-switch language state to a Blender preferences view object."""
     target_language = resolve_target_language(enabled, selected_language, available_languages)
 
-    if enabled:
-        view.language = target_language
-        set_translation_options(view, True)
-    else:
-        set_translation_options(view, False)
-        view.language = target_language
+    if "use_international_fonts" in view.bl_rna.properties:
+        view.use_international_fonts = True
+
+    # Older Blender versions reset translation flags when language changes.
+    view.language = target_language
+    set_translation_options(view, enabled)
 
     return target_language

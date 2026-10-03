@@ -10,7 +10,8 @@ Usage::
     python3 mk_install_zip.py --no-blender    # skip Blender, always use plain zip
 
 When Blender (4.2+) is found, ``blender --command extension build`` is used and
-the result is validated. Otherwise the zip is written directly with Python,
+the extension is validated. A separate legacy add-on zip supports Blender 2.78+.
+Otherwise the zip is written directly with Python,
 which gives the same layout: the add-on files at the root of the archive.
 
 Blender is looked up in this order: ``--blender``, the ``BLENDER`` environment
@@ -88,7 +89,16 @@ def is_excluded(name):
     return any(fnmatch.fnmatch(name, pattern) for pattern in EXCLUDE_NAME_PATTERNS)
 
 
-def build_with_zipfile(zip_path):
+def blender_version(blender):
+    """Read the executable version before using extension-only commands."""
+    result = subprocess.run([blender, "--version"], check=True, capture_output=True, text=True)
+    match = re.search(r"Blender (\d+)\.(\d+)", result.stdout)
+    if match is None:
+        raise RuntimeError("Cannot determine Blender version: {}".format(blender))
+    return tuple(int(part) for part in match.groups())
+
+
+def build_with_zipfile(zip_path, legacy=False):
     print("Building with Python zipfile (no Blender validation)")
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as archive:
         for dirpath, dirnames, filenames in os.walk(SOURCE_DIR):
@@ -99,7 +109,12 @@ def build_with_zipfile(zip_path):
                 if is_excluded(filename):
                     continue
                 path = Path(dirpath) / filename
-                archive.write(path, path.relative_to(SOURCE_DIR).as_posix())
+                if legacy and path == MANIFEST:
+                    continue
+                relative_path = path.relative_to(SOURCE_DIR)
+                if legacy:
+                    relative_path = Path(SOURCE_DIR.name) / relative_path
+                archive.write(path, relative_path.as_posix())
 
 
 def main():
@@ -117,10 +132,16 @@ def main():
         zip_path.unlink()
 
     blender = None if args.no_blender else find_blender(args.blender)
-    if blender:
+    if blender and blender_version(blender) >= (4, 2):
         build_with_blender(blender, zip_path)
     else:
         build_with_zipfile(zip_path)
+
+    legacy_zip_path = DIST_DIR / "{}-{}-support_legacy.zip".format(
+        read_manifest_field("id"), read_manifest_field("version"),
+    )
+    build_with_zipfile(legacy_zip_path, legacy=True)
+    print("Created {} (Blender 2.78+ legacy add-on)".format(legacy_zip_path.relative_to(ROOT)))
 
     with zipfile.ZipFile(zip_path) as archive:
         names = archive.namelist()

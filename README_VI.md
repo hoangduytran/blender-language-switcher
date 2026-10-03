@@ -23,6 +23,20 @@ Tiện ích này có ích cho:
                                                       └─ nút đổi ngôn ngữ ─┘
 ```
 
+## Tải phiên bản 1.0.3
+
+| Phiên bản Blender | Tệp cài đặt |
+|---|---|
+| 2.78–4.1 | [switch_language-1.0.3-support_legacy.zip](https://github.com/hoangduytran/blender-language-switcher/releases/download/v1.0.3/switch_language-1.0.3-support_legacy.zip) |
+| 4.2 trở lên | [switch_language-1.0.3.zip](https://github.com/hoangduytran/blender-language-switcher/releases/download/v1.0.3/switch_language-1.0.3.zip) |
+
+Tệp legacy cũng hỗ trợ Blender mới hơn qua trình cài add-on. Hai tệp dùng
+cùng mã đổi ngôn ngữ; chỉ cài một loại. Blender trước 2.78 không được hỗ trợ.
+Các bản Blender tương lai có thể cần cập nhật tiện ích.
+
+Phiên bản 1.0.3 bổ sung hỗ trợ Blender 2.78c và Python 3.5, đồng thời giữ các
+bản sửa lỗi cho Blender 2.83 và các phiên bản mới hơn.
+
 ## Tiện ích làm được gì
 
 - Một danh sách để chọn ngôn ngữ và một ô đánh dấu để bật/tắt, nằm trên thanh
@@ -38,17 +52,33 @@ Tiện ích này có ích cho:
 
 ## Cần có gì
 
-- Blender **bản 4.2 trở lên**. Tiện ích đã được thử với Blender 4.5.
+- Blender **bản 2.78 trở lên**. Blender 2.78–4.1 dùng tệp ZIP add-on cũ
+  (legacy); Blender 4.2 trở lên có thể dùng tệp ZIP extension. Tiện ích chỉ bật
+  những tùy chọn dịch có trong bản Blender đang chạy.
 - Bản Blender có hỗ trợ nhiều ngôn ngữ. Các bản tải từ trang chính thức
   [blender.org](https://www.blender.org) đều có sẵn. Nếu bản của bạn không có,
   nút đổi ngôn ngữ sẽ không hiện ra.
 
 ## Cách cài đặt
 
+### Blender 2.78–4.1 (bao gồm 2.83)
+
+1. Tải tệp legacy từ bảng trên hoặc thư mục [`dist/`](dist/).
+2. Mở **Edit → Preferences → Add-ons → Install…**, chọn tệp ZIP.
+3. Bật **Interface: Switch Language**.
+
+Với Blender 2.78–2.79, mở **File → User Preferences → Add-ons → Install from
+File…**. Nút xuất hiện ở đầu thanh Info (thanh menu chính).
+
+Tệp legacy cũng dùng được với Blender mới hơn qua **Add-ons → Install from
+Disk…**. Chỉ cài một loại: legacy hoặc extension.
+
+### Blender 4.2 trở lên (extension)
+
 Tên các menu dưới đây ghi bằng tiếng Anh, vì đó là giao diện mặc định của
 Blender.
 
-1. Tải tệp `switch_language-1.0.1.zip` trong thư mục [`dist/`](dist/) về máy:
+1. Tải tệp `switch_language-1.0.3.zip` trong thư mục [`dist/`](dist/) về máy:
    bấm vào tên tệp, rồi bấm nút **Download raw file** (nút hình mũi tên chỉ
    xuống, ở phía bên phải).
 2. Mở Blender, vào menu **Edit → Preferences**, rồi chọn **Get Extensions** ở
@@ -61,7 +91,8 @@ Còn một cách nhanh hơn: kéo tệp zip rồi thả thẳng vào cửa sổ 
 
 ## Cách dùng
 
-1. Nhìn về phía bên phải của thanh trên cùng, ngay trước ô **Scene**.
+1. Tìm nút ngay trước ô **Scene** trong Blender 2.80 trở lên, hoặc ở đầu
+   thanh menu chính trong Blender 2.78–2.79.
 2. Chọn ngôn ngữ trong danh sách, ví dụ tiếng Việt.
 3. Đánh dấu vào ô bên cạnh. Giao diện chuyển sang ngôn ngữ đó.
 4. Bỏ dấu ở ô. Giao diện quay về tiếng Anh.
@@ -114,7 +145,7 @@ Các tệp cần sửa nằm trong thư mục `switch_language/`:
   dùng được tiện ích.
 
 Nếu định chia sẻ bản của mình cho người khác, hãy tăng số phiên bản (dòng
-`version`) trong `blender_manifest.toml`, ví dụ từ `1.0.1` lên `1.0.2`. Tên tệp
+`version`) trong `blender_manifest.toml`, ví dụ từ `1.0.1` lên `1.0.3`. Tên tệp
 zip sẽ lấy theo số này, và nhờ số lớn hơn mà Blender biết đây là bản mới.
 
 ### Bước 3. Làm tệp zip
@@ -134,14 +165,15 @@ py mk_install_zip.py
 ```
 
 Tệp zip được lưu trong thư mục `dist/`, với tên
-`switch_language-<số phiên bản>.zip`. Dòng chữ cuối cùng hiện ra cho biết tên
+`switch_language-<số phiên bản>.zip` và
+`switch_language-<số phiên bản>-support_legacy.zip`. Dòng chữ cuối cùng cho biết tên
 chính xác, ví dụ:
 
 ```
-Created dist/switch_language-1.0.2.zip (3 files: blender_manifest.toml, __init__.py, language_state.py)
+Created dist/switch_language-1.0.3.zip (3 files: blender_manifest.toml, __init__.py, language_state.py)
 ```
 
-Chương trình tự tìm Blender trên máy bạn. Nếu tìm thấy, nó nhờ chính Blender
+Chương trình tự tìm Blender trên máy bạn. Nếu tìm thấy bản 4.2 trở lên, nó nhờ Blender
 đóng gói tệp zip và kiểm tra xem tệp có dùng được không. Nó tìm theo thứ tự
 sau:
 
@@ -150,8 +182,10 @@ sau:
 3. lệnh `blender`, nếu gõ `blender` trong cửa sổ gõ lệnh là mở được Blender;
 4. trên Mac: các ứng dụng Blender trong thư mục **Applications**.
 
-Nếu không tìm thấy Blender, chương trình vẫn làm được tệp zip bằng Python. Tệp
-đó có nội dung giống hệt, chỉ là chưa được Blender kiểm tra lại.
+Nếu không tìm thấy Blender, hoặc Blender thấp hơn 4.2, chương trình tạo tệp
+ZIP extension bằng Python. Chương trình luôn tạo thêm tệp ZIP legacy, chứa
+thư mục `switch_language/` và không có manifest. Extension yêu cầu Blender
+4.2 trở lên; tệp legacy hỗ trợ Blender 2.78 trở lên.
 
 Các cách chạy:
 
@@ -178,7 +212,9 @@ Tiện ích gắn thêm một hàm vẽ vào thanh trên cùng (`TOPBAR_HT_upper
 `prepend`, để phần của nó được vẽ trước phần có sẵn của Blender. Blender vẽ
 thanh trên cùng làm hai nửa, trái và phải. Hàm này chỉ vẽ ở nửa bên phải
 (`context.region.alignment == 'RIGHT'`), và vì được vẽ trước nên nút đổi ngôn
-ngữ nằm ngay bên trái ô Scene / View Layer.
+ngữ nằm ngay bên trái ô Scene / View Layer. Với Blender 2.78–2.79, tiện ích
+dùng `INFO_HT_header`, đọc `user_preferences.system` và vẽ ở đầu thanh menu
+chính, không lọc theo nửa bên phải.
 
 Danh sách ngôn ngữ và ô đánh dấu được lưu trong phần thiết lập của tiện ích.
 Mỗi khi một trong hai thay đổi, hàm `language_state.apply_language_state()` sẽ
@@ -191,7 +227,8 @@ Mỗi khi một trong hai thay đổi, hàm `language_state.apply_language_state
 | `switch_language/__init__.py` | Đăng ký tiện ích với Blender, lưu thiết lập, vẽ nút trên thanh trên cùng |
 | `switch_language/language_state.py` | Chọn ngôn ngữ và bật/tắt các phần dịch |
 | `switch_language/blender_manifest.toml` | Thông tin về tiện ích: tên, phiên bản, giấy phép |
-| `dist/switch_language-1.0.1.zip` | Tệp zip để cài ngay vào Blender |
+| `dist/switch_language-1.0.3.zip` | Extension cho Blender 4.2 trở lên |
+| `dist/switch_language-1.0.3-support_legacy.zip` | Add-on cho Blender 2.78 trở lên |
 | `mk_install_zip.py` | Làm lại tệp zip trong `dist/` từ các tệp đã sửa |
 | `README.md` | Hướng dẫn bằng tiếng Anh |
 
@@ -200,3 +237,6 @@ Mỗi khi một trong hai thay đổi, hàm `language_state.apply_language_state
 GPL-2.0 trở lên. Nói đơn giản: bạn được dùng, sửa và chia sẻ lại tiện ích này
 miễn phí, với điều kiện bản bạn chia sẻ cũng phải giữ cùng giấy phép này. Toàn
 văn giấy phép (bằng tiếng Anh) nằm trong tệp [LICENSE](LICENSE).
+
+Blender trước bản 2.78 không thuộc phạm vi đã kiểm tra.
+Đã kiểm tra bằng Blender 2.78c, 2.83.9, 4.5.9, 5.2.0 và 5.3.0 Alpha.
